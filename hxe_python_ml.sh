@@ -27,7 +27,7 @@ echo "Password: $hxeadmpw"
 #as root
 zypper -n --gpg-auto-import-keys install --no-recommends --auto-agree-with-licenses --force-resolution --type pattern devel_basis
 
-zypper -n --gpg-auto-import-keys install --no-recommends --auto-agree-with-licenses --force-resolution tk-devel tcl-devel libffi-devel openssl-devel readline-devel sqlite3-devel ncurses-devel xz-devel zlib-devel
+zypper -n --gpg-auto-import-keys install --no-recommends --auto-agree-with-licenses --force-resolution tk-devel tcl-devel libffi-devel openssl-devel readline-devel sqlite3-devel ncurses-devel xz-devel zlib-devel nodejs npm lynx jq
 
 #as hxeadm
 
@@ -53,4 +53,21 @@ xs create-runtime -p /usr/sap/HXE/HDB90/hxe_python_ml/python_3_6_5/
 cd ../..
 
 unzip XS_PYTHON00_0-70003433.ZIP -d sap_dependencies
+
+cd python
+
+#pip download -d vendor -r requirements.txt --find-links ../../sap_dependencies
+#tar xzvf hana_ml-1.0.3.tar.gz
+
+# for buildpack vendoring
+pip download -d vendor -r requirements.txt --find-links ../../sap_dependencies --find-links ../../hana_ml-1.0.3.tar.gz hana_ml
+
+# for local testing
+pip install -r requirements.txt --find-links ../../sap_dependencies --find-links ../../hana_ml-1.0.3.tar.gz
+
+pip install jupyter
+
+jupyter notebook --generate-config
+
+pip install sklearn
 
