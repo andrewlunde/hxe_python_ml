@@ -15,5 +15,14 @@ API Docs:
 [Python Client API for machine learning algorithms](https://help.sap.com/http.svc/rc/3f0dbe754b194c42a6bf3405697b711f/2.0.03/en-US/html/index.html)
 
 
-hxeadm@hxehost:/usr/sap/HXE/HDB90/hxe_python_ml/mta_python_ml/python> jupyter notebook 
+```
+. set_python_env.sh
+```
 
+hxeadm@hxehost:/usr/sap/HXE/HDB90/hxe_python_ml/mta_python_ml/python>
+
+```
+jupyter notebook
+```
+
+[HANA Python ML : Recognizing hand-written digits](http://hxehost:8080/notebooks/hana_ml_digit_classification.ipynb)
