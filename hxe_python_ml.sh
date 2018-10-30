@@ -72,5 +72,21 @@ pip install jupyter
 jupyter notebook --generate-config
 
 pip install sklearn
-
 pip install mxnet
+pip install tensorflow
+pip install python-mnist
+pip install boto3
+
+# for CF stuff
+# As root
+wget -O cf-cli-installer_latest.rpm https://cli.run.pivotal.io/stable?release=redhat64
+rpm -Uvh cf-cli-installer_latest.rpm
+
+#as hxeadm
+cf api https://api.cf.us10.hana.ondemand.com
+#get latest from here.
+#https://tools.hana.ondemand.com/#cloud
+cf install-plugin cf-cli-mta-plugin-2.0.3-linux-x86_64.bin 
+
+
+
