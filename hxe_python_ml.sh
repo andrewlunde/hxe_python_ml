@@ -24,10 +24,22 @@ echo ""
 echo "hxehost login: hxeadm"
 echo "Password: $hxeadmpw"
 
+echo "Get passwordless login of the hxeadm user setup."
+
+zypper ar...
+
+xs api https://hxehost:39030/ --skip-ssl-validation
+
+// Stop everything but core procs
+xs a | grep STARTED | grep -v hrtt-service | grep -v di-runner | grep -v di-core | grep -v deploy-service | cut -d ' ' -f 1 | while read -r line ; do echo "Stopping $line"; xs stop $line ; done
+
+// Refresh the repo catalogs
+zypper -n --gpg-auto-import-keys refresh
+
 #as root
 zypper -n --gpg-auto-import-keys install --no-recommends --auto-agree-with-licenses --force-resolution --type pattern devel_basis
 
-zypper -n --gpg-auto-import-keys install --no-recommends --auto-agree-with-licenses --force-resolution tk-devel tcl-devel libffi-devel openssl-devel readline-devel sqlite3-devel ncurses-devel xz-devel zlib-devel nodejs npm lynx jq libzip2 libzip inotify-tools
+zypper -n --gpg-auto-import-keys install --no-recommends --auto-agree-with-licenses --force-resolution tk-devel tcl-devel libffi-devel openssl-devel readline-devel sqlite3-devel ncurses-devel xz-devel zlib-devel nodejs wget npm lynx jq libzip2 libzip inotify-tools
 
 #as hxeadm
 
