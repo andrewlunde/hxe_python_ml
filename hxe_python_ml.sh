@@ -39,7 +39,7 @@ zypper -n --gpg-auto-import-keys refresh
 #as root
 zypper -n --gpg-auto-import-keys install --no-recommends --auto-agree-with-licenses --force-resolution --type pattern devel_basis
 
-zypper -n --gpg-auto-import-keys install --no-recommends --auto-agree-with-licenses --force-resolution tk-devel tcl-devel libffi-devel openssl-devel readline-devel sqlite3-devel ncurses-devel xz-devel zlib-devel nodejs wget npm lynx jq libzip2 libzip inotify-tools
+zypper -n --gpg-auto-import-keys install --no-recommends --auto-agree-with-licenses --force-resolution tk-devel tcl-devel libffi-devel openssl-devel readline-devel sqlite3-devel ncurses-devel xz-devel zlib-devel nodejs wget git-core npm lynx jq libzip2 libzip inotify-tools
 
 #as hxeadm
 
