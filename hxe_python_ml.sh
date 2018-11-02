@@ -27,7 +27,7 @@ echo "Password: $hxeadmpw"
 #as root
 zypper -n --gpg-auto-import-keys install --no-recommends --auto-agree-with-licenses --force-resolution --type pattern devel_basis
 
-zypper -n --gpg-auto-import-keys install --no-recommends --auto-agree-with-licenses --force-resolution tk-devel tcl-devel libffi-devel openssl-devel readline-devel sqlite3-devel ncurses-devel xz-devel zlib-devel nodejs npm lynx jq libzip2 libzip
+zypper -n --gpg-auto-import-keys install --no-recommends --auto-agree-with-licenses --force-resolution tk-devel tcl-devel libffi-devel openssl-devel readline-devel sqlite3-devel ncurses-devel xz-devel zlib-devel nodejs npm lynx jq libzip2 libzip inotify-tools
 
 #as hxeadm
 
@@ -88,5 +88,88 @@ cf api https://api.cf.us10.hana.ondemand.com
 #https://tools.hana.ondemand.com/#cloud
 cf install-plugin cf-cli-mta-plugin-2.0.3-linux-x86_64.bin 
 
+
+#vim setup as hxeadm
+user vimrc file: "$HOME/.vimrc"
+mkdir -p $HOME/.vim
+touch $HOME/.vimrc
+git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+#Add to top of $HOME/.vimrc
+
+set nocompatible              " required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
+
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+
+# in vim run this.
+:PluginInstall
+
+#Add to bottom of $HOME/.vimrc
+
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+" Enable folding with the spacebar
+nnoremap <space> za
+:w
+
+Plugin 'tmhedberg/SimpylFold'
+
+# in vim run this.
+:PluginInstall
+
+#Add to bottom of $HOME/.vimrc
+au BufNewFile,BufRead *.py
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+
+
+" au BufNewFile,BufRead *.js, *.html, *.css set tabstop=2 set softtabstop=2 set shiftwidth=2
+
+Plugin 'vim-scripts/indentpython.vim'
+
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+set encoding=utf-8
+
+let python_highlight_all=1
+syntax on
+
+Plugin 'scrooloose/nerdtree'
+"Plugin 'scrooloose/nerdtree-tabs'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
+Plugin 'tpope/vim-fugitive'
+
+"Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 
