@@ -1,7 +1,8 @@
 # hxe_python_ml
 
-This project takes a stock HXE Rev33 system and gathers up all the requirements to demonstrate the
+This project takes a stock HXE Rev33 system and gathers up all the requirements to demonstrate the HANA Python Machine Learning API.  A blog post describing the steps performed by the setup.sh script can be found here.
 
+[Setting up a HANA Express Python Machine Learning API Demo VM](https://blogs.sap.com/2018/11/03/setting-up-a-hana-express-python-machine-learning-api-demo-vm/)
 
 Video:
 [Introducing the Python Client API for SAP HANA In-Database Predictive and Machine Learning](https://video.sap.com/media/t/1_0bw54r9a/)
