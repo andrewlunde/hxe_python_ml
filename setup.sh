@@ -8,7 +8,7 @@
 
 echo "Run like this..."
 echo "echo \"Start Over\" > /tmp/progress.log"
-echo "export HXEADMPW=\"Plak8484\" ; export HANADBPW=\"Plak8484\" ; ./install.sh"
+echo "export HXEADMPW=\"Plak8484\" ; export HANADBPW=\"Plak8484\" ; ./setup.sh"
 echo "Starting..."
 
 hxeadmpw=$HXEADMPW
@@ -87,18 +87,6 @@ case $last_step in
         echo "Setting up Package Repositories."
 	read -s -p "Continue? (Enter=Yes, Ctrl-C to exit)" contyn
 	echo ""
-	cmd="sudo zypper ar http://download.opensuse.org/distribution/leap/42.2/repo/oss/ oss"
-  	echo $cmd
-  	#eval $cmd
-	cmd="sudo zypper ar http://download.opensuse.org/distribution/leap/42.2/repo/non-oss/ non-oss"
-  	echo $cmd
-  	#eval $cmd
-	cmd="sudo zypper ar http://download.opensuse.org/update/leap/42.2/oss/ update-oss"
-  	echo $cmd
-  	#eval $cmd
-	cmd="sudo zypper ar http://download.opensuse.org/update/leap/42.2/non-oss/ update-non-oss"
-  	echo $cmd
-  	#eval $cmd
 	cmd="sudo zypper -n --gpg-auto-import-keys refresh"
   	echo $cmd
   	#eval $cmd
@@ -114,6 +102,7 @@ case $last_step in
     clone_project)
         echo "Git Clone the Python ML Project."
 	read -s -p "Continue? (Enter=Yes, Ctrl-C to exit)" contyn
+	echo ""
 	cmd="git clone https://github.com/alundesap/mta_python_ml.git"
   	echo $cmd
   	#eval $cmd
@@ -122,6 +111,7 @@ case $last_step in
     build_python_runtime)
         echo "Build and install the pyton runtime."
 	read -s -p "Continue? (Enter=Yes, Ctrl-C to exit)" contyn
+	echo ""
 	cmd="wget https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tgz"
   	echo $cmd
   	#eval $cmd
@@ -146,7 +136,7 @@ case $last_step in
 	cmd="unzip XS_PYTHON00_1-70003433.ZIP -d sap_dependencies"
   	echo $cmd
   	#eval $cmd
-	cmd="cd mta_python_ml/python"
+	cmd=". set_python_env.sh"
   	echo $cmd
   	#eval $cmd
 	cmd="mkdir -p vendor ; pip download -d vendor -r requirements.txt --find-links ../../sap_dependencies --find-links ../../hana_ml-1.0.3.tar.gz hana_ml ; cd .."
@@ -184,7 +174,7 @@ case $last_step in
         write_progress "build_ml_demo_app"
         ;&
     build_ml_demo_app)
-        echo "Build the Python ML Demo appliation."
+        echo "Build the DB and Python application modules."
 	read -s -p "Continue? (Enter=Yes, Ctrl-C to exit)" contyn
 	cmd="xs t -s ml"
   	echo $cmd
@@ -222,6 +212,10 @@ case $last_step in
 	cmd="pymodurl=\$(xs app python-ml.python --urls) ; echo \$pymodurl"
   	echo $cmd
   	#eval $cmd
+        write_progress "build_web_module"
+        ;&
+    build_web_module)
+        echo "Build the web module and adjust the target route."
 	cmd="xs push python-ml.web -k 1024M -m 256M -n web -p web --no-start"
   	echo $cmd
   	#eval $cmd
@@ -237,6 +231,10 @@ case $last_step in
 	cmd="pyweburl=\$(xs app python-ml.web --urls) ; echo \$pyweburl"
   	echo $cmd
   	#eval $cmd
+        write_progress "get_user_add_role"
+        ;&
+    get_user_add_role)
+        echo "Get the HDI user and add the AFLPAL role."
 	cmd="hdiusr=\$(xs env python-ml.python | grep '\"user\"' | cut -d \":\" -f 2 | cut -d '\"' -f 2) ; echo \$hdiusr"
   	echo $cmd
   	#eval $cmd
