@@ -171,14 +171,10 @@ sudo zypper -n --gpg-auto-import-keys install --no-recommends --auto-agree-with-
 Clone this repo in the hxeadm default directory.
 
 ```
-cd /usr/sap/HXE/HDB90 ; 
+cd /usr/sap/HXE/HDB90
+git clone https://github.com/alundesap/hxe_python_ml.git
+cd hxe_python_ml
 ```
-
-Install the build tools.
-```
-sudo zypper -n --gpg-auto-import-keys install --no-recommends --auto-agree-with-licenses --force-resolution --type pattern devel_basis
-```
-
 ---
 
 Now run the setup.sh script found in this repo as the hxeadm user.  Be sure to enter the passwords you provided in the steps above.
