@@ -163,18 +163,32 @@ git clone https://github.com/alundesap/hxe_python_ml.git
 cd hxe_python_ml
 ```
 ---
-Optionally, install the Cloud Foundry CLI + MTA plugin.
-```
-sudo wget -O cf-cli-installer_latest.rpm https://cli.run.pivotal.io/stable?release=redhat64
-sudo rpm -Uvh cf-cli-installer_latest.rpm
-wget -O mta-plugin-linux.bin  https://github.com/cloudfoundry-incubator/multiapps-cli-plugin/releases/download/v2.0.7/mta_plugin_linux_amd64
-cf install-plugin mta-plugin-linux.bin -f
-```
----
 
 Now run the setup.sh script found in this repo as the hxeadm user.  Be sure to enter the passwords you provided in the steps above.
 
 ```
 cd /usr/sap/HXE/HDB90/hxe_python_ml/
 ./setup.sh
+```
+---
+Optionally, install the Cloud Foundry CLI + MTA plugin.
+```
+sudo wget -O cf-cli-installer_latest.rpm https://cli.run.pivotal.io/stable?release=redhat64
+sudo rpm -Uvh cf-cli-installer_latest.rpm
+wget -O mta-plugin-linux.bin  https://github.com/cloudfoundry-incubator/multiapps-cli-plugin/releases/download/v2.0.7/mta_plugin_linux_amd64
+cf install-plugin mta-plugin-linux.bin -f
+wget -O mta_archive_builder-1.1.0.jar http://thedrop.sap-a-team.com/files/mta_archive_builder-1.1.0.jar
+sudo zypper in java
+```
+Build an MTAR file and deploy.
+```
+cd /usr/sap/HXE/HDB90/hxe_python_ml/mta_python_ml
+npm config set @sap:registry "https://npm.sap.com/" ; npm config set registry "https://registry.npmjs.org/" ; npm config set strict-ssl true
+java -jar ../mta_archive_builder-1.1.0.jar --help
+java -jar ../mta_archive_builder-1.1.0.jar --list-targets
+mkdir -p target
+cd db ; npm install ; cd ..
+cd web ; npm install ; cd ..
+java -jar ../mta_archive_builder-1.1.0.jar --build-target CF --mtar target/python-ml.mtar build
+cf deploy target/python-ml.mtar --use-namespaces --no-namespaces-for-services -e deploy_cf.mtaext
 ```
