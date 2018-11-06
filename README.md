@@ -163,6 +163,14 @@ git clone https://github.com/alundesap/hxe_python_ml.git
 cd hxe_python_ml
 ```
 ---
+Optionally, install the Cloud Foundry CLI + MTA plugin.
+```
+sudo wget -O cf-cli-installer_latest.rpm https://cli.run.pivotal.io/stable?release=redhat64
+sudo rpm -Uvh cf-cli-installer_latest.rpm
+wget -O mta-plugin-linux.bin  https://github.com/cloudfoundry-incubator/multiapps-cli-plugin/releases/download/v2.0.7/mta_plugin_linux_amd64
+cf install-plugin mta-plugin-linux.bin -f
+```
+---
 
 Now run the setup.sh script found in this repo as the hxeadm user.  Be sure to enter the passwords you provided in the steps above.
 
