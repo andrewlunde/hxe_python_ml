@@ -188,6 +188,7 @@ java -jar ../mta_archive_builder-1.1.0.jar --help
 java -jar ../mta_archive_builder-1.1.0.jar --list-targets
 mkdir -p target
 cd db ; npm install ; cd ..
+cd python ; mkdir -p vendor ; pip download -d vendor -r requirements.txt --find-links ../../sap_dependencies --find-links ../../hana_ml-1.0.3.tar.gz hana_ml ; cd ..
 cd web ; npm install ; cd ..
 java -jar ../mta_archive_builder-1.1.0.jar --build-target CF --mtar target/python-ml.mtar build
 cf deploy target/python-ml.mtar --use-namespaces --no-namespaces-for-services -e deploy_cf.mtaext
