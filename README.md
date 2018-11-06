@@ -195,5 +195,5 @@ export hdiusr=$(xs env python-ml.python | grep '"user"' | cut -d ":" -f 2 | cut 
 echo "Run this to grant the AFLPAL role."
 echo "hdbsql -i 90 -n localhost:39015 -u SYSTEM -p "$hanadbpw" -d HXE \"grant AFL__SYS_AFL_AFLPAL_EXECUTE to "$hdiusr"\""
 echo "Check with.."
-echo 'hdbsql -i 90 -n localhost:39015 -u SYSTEM -p "$hanadbpw" -d HXE \"SELECT * FROM \"PUBLIC\".\"EFFECTIVE_ROLES\" where USER_NAME = \'118E85B7522A4E58B1A523956119E2D4_9FDD4LG5YZOLH9JT4XRSX93WD_RT\' AND ROLE_NAME = \'AFL__SYS_AFL_AFLPAL_EXECUTE\''
+echo "hdbsql -i 90 -n localhost:39015 -u SYSTEM -p "$hanadbpw" -d HXE \"SELECT * FROM \"PUBLIC\".\"EFFECTIVE_ROLES\" where USER_NAME = '"$hdiusr"' AND ROLE_NAME = 'AFL__SYS_AFL_AFLPAL_EXECUTE'"
 ```
