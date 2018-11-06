@@ -91,3 +91,20 @@ If your system needs a proxy setting to reach the internet, configure it now.
 
 ![](https://blogs.sap.com/wp-content/uploads/2018/11/blog_20181102_26.png)
 
+The system will now do a bunch of installation/configuration/adjustment/tuning.  This can take at least 20 minutes and you should wait for this to complete before continuing.  More coffee?
+
+![](https://blogs.sap.com/wp-content/uploads/2018/11/blog_20181102_28.png)
+
+Last chance before continuing.
+
+![](https://blogs.sap.com/wp-content/uploads/2018/11/blog_20181102_30.png)
+
+From this point we’ll ssh into our server with the built-in mac ssh client.  In windows you’ll want to use Putty and Putty-gen to get things set up.  I’m also setting up for passwordless ssh’ing into the server.  There are several ways to do this so I won’t go into detail.  For a quick setup, use ssh-keygen and ssh-copy-id.
+
+```
+ssh-keygen
+ssh-copy-id -i ~/.ssh/id_rsa.pub hxeadm@hxehost
+```
+
+Open a terminal or ssh client window and ssh to the server.
+
