@@ -63,7 +63,7 @@ Run VMWare Fusion or your preferred hypervisor app and import the ova file.
 
 ![](https://blogs.sap.com/wp-content/uploads/2018/11/blog_20181102_13.png)
 
-On my machine this took about 20 minutes.  Don’t be tempted to give your vm less than 12GB.
+On my machine this took about 8 minutes.  Don’t be tempted to give your vm less than 12GB.
 
 ![](https://blogs.sap.com/wp-content/uploads/2018/11/blog_20181102_16.png)
 
@@ -71,7 +71,15 @@ When the vm starts up, Confirm the keyboard configuration and change the time zo
 
 ![](https://blogs.sap.com/wp-content/uploads/2018/11/blog_20181102_18.png)
 
+You probably want to set your VM to use bridged networking mode.  Bridged mode allows your VM to get it's own IP that is peer to your host machine.  See your hypervisor documentation for details.
+
 Consult the Getting_Started_HANAexpress_VM.pdf file that was downloaded for details of setting up your machine’s hosts file to override the name resolution for the hostname hxehost.
+
+You should be able to ping your VM from your host machine as hxehost.
+
+```
+ping hxehost
+```
 
 WAIT! .. resist attempting to login right away.  Give the system about 15 minutes to settle before continuing.  Set a timer for 15 minutes and go get a cup of coffee.
 
@@ -91,7 +99,7 @@ If your system needs a proxy setting to reach the internet, configure it now.
 
 ![](https://blogs.sap.com/wp-content/uploads/2018/11/blog_20181102_26.png)
 
-The system will now do a bunch of installation/configuration/adjustment/tuning.  This can take at least 20 minutes and you should wait for this to complete before continuing.  More coffee?
+The system will now do a bunch of installation/configuration/adjustment/tuning.  This can take at least 30 minutes and you should wait for this to complete before continuing.  More coffee?
 
 ![](https://blogs.sap.com/wp-content/uploads/2018/11/blog_20181102_28.png)
 
@@ -138,9 +146,42 @@ Become the root user by starting a new /bin/bash shell.
 sudo /bin/bash
 ```
 
+Double check the IP that your VM is using by running this as root.
+
+```
+ifconfig eth0 | grep "inet addr"
+```
+
+Setup up the repos so that we can get the needed software loaded.
+
+```
+sudo zypper ar http://download.opensuse.org/distribution/leap/42.2/repo/oss/ oss
+sudo zypper ar http://download.opensuse.org/distribution/leap/42.2/repo/non-oss/ non-oss
+sudo zypper ar http://download.opensuse.org/update/leap/42.2/oss/ update-oss
+sudo zypper ar http://download.opensuse.org/update/leap/42.2/non-oss/ update-non-oss
+sudo zypper -n --gpg-auto-import-keys refresh
+```
+
+Get the git client so that we can clone this repo on the VM.
+
+```
+sudo zypper -n --gpg-auto-import-keys install --no-recommends --auto-agree-with-licenses --force-resolution git-core
+```
+
+Clone this repo in the hxeadm default directory.
+
+```
+cd /usr/sap/HXE/HDB90 ; 
+```
+
+Install the build tools.
+```
+sudo zypper -n --gpg-auto-import-keys install --no-recommends --auto-agree-with-licenses --force-resolution --type pattern devel_basis
+```
+
 ---
 
-Now run the setup.sh script found in this repo.  Be sure to enter the passwords you provided in the steps above.
+Now run the setup.sh script found in this repo as the hxeadm user.  Be sure to enter the passwords you provided in the steps above.
 
 ```
 cd /usr/sap/HXE/HDB90/hxe_python_ml/
