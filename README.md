@@ -108,3 +108,41 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub hxeadm@hxehost
 
 Open a terminal or ssh client window and ssh to the server.
 
+---
+
+Check that the xs api endpoint is set.
+
+If it isn’t, use the following.
+
+```
+xs api https://hxehost:39030/ --cacert=/hana/shared/HXE/xs/controller_data/controller/ssl-pub/router/default.root.crt.pem
+```
+If the XSA_ADMIN user isn’t logged it, Use this to login and the password set above.
+```
+xs login -u XSA_ADMIN
+```
+By default the XS Advanced application runtime has a LOT of things running.  Since we’re very tight on memory we can turn nearly everything off but just the critical apps.  Run these commands.
+```
+xs target -o HANAExpress -s SAP ; xs a | grep STARTED | grep -v hrtt-service | grep -v di-runner | grep -v di-core | grep -v deploy-service | cut -d ' ' -f 1 | while read -r line ; do echo "Stopping $line"; xs stop $line ; done
+```
+Note that once the above commands have finished, you won’t be able to access the xsa-cockpit, hana-cockpit, or webide or any other xsa utility.
+
+Run the following to see what’s still started.
+```
+xs a | grep STARTED
+```
+The hxeadm user is by default set up to be able to sudo into the root user.
+
+Become the root user by starting a new /bin/bash shell.
+```
+sudo /bin/bash
+```
+
+---
+
+Now run the setup.sh script found in this repo.  Be sure to enter the passwords you provided in the steps above.
+
+```
+cd /usr/sap/HXE/HDB90/hxe_python_ml/
+./setup.sh
+```
