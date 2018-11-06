@@ -191,4 +191,6 @@ cd db ; npm install ; cd ..
 cd web ; npm install ; cd ..
 java -jar ../mta_archive_builder-1.1.0.jar --build-target CF --mtar target/python-ml.mtar build
 cf deploy target/python-ml.mtar --use-namespaces --no-namespaces-for-services -e deploy_cf.mtaext
+export hdiusr=$(xs env python-ml.python | grep '"user"' | cut -d ":" -f 2 | cut -d '"' -f 2) ; echo $hdiusr
+
 ```
