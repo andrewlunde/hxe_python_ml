@@ -193,8 +193,12 @@ cd web ; npm install ; cd ..
 java -jar ../mta_archive_builder-1.1.0.jar --build-target CF --mtar target/python-ml.mtar build
 cf deploy target/python-ml.mtar --use-namespaces --no-namespaces-for-services -e deploy_cf.mtaext
 export hdiusr=$(cf env python-ml.python | grep '"user"' | cut -d ":" -f 2 | cut -d '"' -f 2) ; echo $hdiusr
+export hanahost=$(cf env python-ml.python | grep "host" | tr -s " " | cut -d '"' -f 4) ; echo $hanahost
+export hanaport=$(cf env python-ml.python | grep "port" | tr -s " " | cut -d '"' -f 4) ; echo $hanaport
+export hanacert=$(cf env python-ml.python | grep "certificate" | tr -s " " | cut -d '"' -f 4) ; echo $hanacert
+
 echo "Run this to grant the AFLPAL role."
-echo "hdbsql -i 90 -n localhost:39015 -u SYSTEM -p "$hanadbpw" -d HXE \"grant AFL__SYS_AFL_AFLPAL_EXECUTE to "$hdiusr"\""
+hdbsql -e -n $hanahost:$hanaport -u SYSTEM -p $hanadbpw -sslprovider openssl -ssltrustcert  "grant AFL__SYS_AFL_AFLPAL_EXECUTE to \"$hdiusr\""
 echo "Check with.."
-echo "hdbsql -i 90 -n localhost:39015 -u SYSTEM -p "$hanadbpw" -d HXE \"SELECT * FROM \"PUBLIC\".\"EFFECTIVE_ROLES\" where USER_NAME = '"$hdiusr"' AND ROLE_NAME = 'AFL__SYS_AFL_AFLPAL_EXECUTE'"
+hdbsql -e -n $hanahost:$hanaport -u SYSTEM -p $hanadbpw -sslprovider openssl -ssltrustcert "SELECT * FROM \"PUBLIC\".\"EFFECTIVE_ROLES\" where USER_NAME = '"$hdiusr"' AND ROLE_NAME = 'AFL__SYS_AFL_AFLPAL_EXECUTE'"
 ```
