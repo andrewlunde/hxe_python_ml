@@ -150,7 +150,7 @@ case $last_step in
 	read -s -p "Continue? (Enter=Yes, Ctrl-C to exit)" contyn
 	echo ""
 	echo ""
-	cmd="wget -c https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tgz"
+	cmd="wget -c https://www.python.org/ftp/python/3.7.1/Python-3.7.1.tgz"
   	echo $cmd
   	#eval $cmd
 	cmd="wget -c http://thedrop.sap-a-team.com/files/hana_ml-1.0.3.tar.gz"
@@ -159,10 +159,10 @@ case $last_step in
 	cmd="wget -c http://thedrop.sap-a-team.com/files/XS_PYTHON00_1-70003433.ZIP"
   	echo $cmd
   	#eval $cmd
-	cmd="tar xzvf Python-3.6.5.tgz ; md python_3_6_5 ; cd Python-3.6.5 ; ./configure --prefix=/usr/sap/HXE/HDB"$hxeinst"/hxe_python_ml/python_3_6_5/ --exec-prefix=/usr/sap/HXE/HDB"$hxeinst"/hxe_python_ml/python_3_6_5/ ; make -j4 ; make altinstall"
+	cmd="tar xzvf Python-3.7.1.tgz ; md python_3_7_1 ; cd Python-3.7.1 ; ./configure --prefix=/usr/sap/HXE/HDB"$hxeinst"/hxe_python_ml/python_3_7_1/ --exec-prefix=/usr/sap/HXE/HDB"$hxeinst"/hxe_python_ml/python_3_7_1/ ; make -j4 ; make altinstall"
   	echo $cmd
   	#eval $cmd
-	cmd="cd ../python_3_6_5/bin ; cp easy_install-3.6 easy_install ; cp pip3.6 pip ; cp pydoc3.6 pydoc ; cp python3.6 python ; cp pyvenv-3.6 pyvenv"
+	cmd="cd ../python_3_7_1/bin ; ln -s easy_install-3.6 easy_install ; ln -s pip3.6 pip ; ln -s pydoc3.6 pydoc ; ln -s python3.6 python ; ln -s pyvenv-3.6 pyvenv"
   	echo $cmd
   	#eval $cmd
         echo ""
@@ -171,13 +171,13 @@ case $last_step in
         echo " If you find that the pip command below fails with an inablility to import the _socket library, "
         echo " it’s because the configure/build process under some variations of linux leaves some important libraries in an unexpected location."
         echo " Change into the directory where the target python was installed."
-        echo "cd python_3_6_5"
+        echo "cd python_3_7_1"
         echo " Copy the files in the lib64 folder into the lib folder"
         echo "cp -avp lib64/* lib"
         echo " Uninstall the runtime. By first finding it’s ID and then deleting it."
         echo ""
         echo ""
-	cmd="xs create-runtime -p /usr/sap/HXE/HDB"$hxeinst"/hxe_python_ml/python_3_6_5/"
+	cmd="xs create-runtime -p /usr/sap/HXE/HDB"$hxeinst"/hxe_python_ml/python_3_7_1/"
   	echo $cmd
   	#eval $cmd
 	cmd="cd ../.."

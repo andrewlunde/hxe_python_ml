@@ -1,8 +1,8 @@
 #!/bin/bash
-export PYTHONHOME=/usr/sap/HXE/HDB90/hxe_python_ml/python_3_6_5
+export PYTHONHOME=/usr/sap/HXE/HDB00/hxe_python_ml/python_3_6_5
 unset PYTHONSTARTUP
 export PATH=$PYTHONHOME/bin:$PATH
-export PYTHONUSERBASE=/usr/sap/HXE/HDB90/hxe_python_ml/mta_python_ml/python/vendor/
+export PYTHONUSERBASE=/usr/sap/HXE/HDB00/hxe_python_ml/mta_python_ml/python/vendor/
 export PYTHONPATH=$PYTHONUSERBASE
 #
 # For local building of NodeJS
